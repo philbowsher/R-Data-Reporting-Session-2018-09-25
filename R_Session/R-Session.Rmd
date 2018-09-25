@@ -1,0 +1,554 @@
+---
+title: "R-Data-Reporting-Session-2018-09-25"
+author: "Phil Bowsher"
+date: "Thur, Sept 25th, 2018"
+output: 
+  ioslides_presentation:
+    css: shiny-slides.css
+    logo: images/shiny-logo.png
+    self_contained: no
+    incremental: true
+runtime: shiny
+---
+
+<style type="text/css">
+
+slides > slide:before {
+  font-size: 12pt;
+  content: 'http://shiny.rstudio.com/';
+  position: absolute;
+  text-align: center;
+  bottom: 15px;
+  left: 50%;  
+  margin-left: -300px;
+  width: 600px;
+  line-height: 1.9;
+}
+
+div.img-col{
+  text-align: center;
+  font-size: 14pt;
+}
+
+a {
+  border-bottom: none !important;
+}
+
+.wrapper {
+  margin: 70px auto;
+  position: relative;
+  z-index: 90;
+}
+
+.ribbon-wrapper-green {
+  width: 145px;
+  height: 148px;
+  overflow: hidden;
+  position: absolute;
+  top: -3px;
+  right: -3px;
+}
+
+.ribbon-green {
+  font: bold 15px Sans-Serif;
+  color: #333;
+  text-align: center;
+  text-shadow: rgba(255,255,255,0.5) 0px 1px 0px;
+  -webkit-transform: rotate(45deg);
+  -moz-transform:    rotate(45deg);
+  -ms-transform:     rotate(45deg);
+  -o-transform:      rotate(45deg);
+  position: relative;
+  padding: 7px 0;
+  left: -25px;
+  top: 45px;
+  width: 220px;
+  background-color: #7ADCBF;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#8AACDF), to(#658FBE)); 
+  background-image: -webkit-linear-gradient(top, #8AACDF, #658FBE); 
+  background-image:    -moz-linear-gradient(top, #8AACDF, #658FBE); 
+  background-image:     -ms-linear-gradient(top, #8AACDF, #658FBE); 
+  background-image:      -o-linear-gradient(top, #8AACDF, #658FBE); 
+  color: #6a6340;
+  -webkit-box-shadow: 0px 0px 3px rgba(0,0,0,0.3);
+  -moz-box-shadow:    0px 0px 3px rgba(0,0,0,0.3);
+  box-shadow:         0px 0px 3px rgba(0,0,0,0.3);
+}
+
+.ribbon-green:before, .ribbon-green:after {
+  content: "";
+  border-top:   3px solid #00896e;   
+  border-left:  3px solid transparent;
+  border-right: 3px solid transparent;
+  position:absolute;
+  bottom: -3px;
+}
+
+.ribbon-green:before {
+  left: 0;
+}
+.ribbon-green:after {
+  right: 0;
+}
+</style>
+
+# Session Outline
+
+## You will learn:
+- R Setup
+- Importing Data via Tidyverse
+- ggplot2
+- htmlwidgets
+- RMD
+
+# Part 1 Setup
+
+## Setup
+
+- R
+- Packages
+- IDE
+- Projects
+- Sessions
+- Git/Github
+- RSC
+- Shiny
+- Repeatable & Reproducible
+
+
+
+
+
+
+
+
+
+## How Do I Use R After Workshop?
+- R Review
+- Not a R Intro but also No prior knowledge of R, RStudio, Shiny or RMD is needed
+- https://cran.r-project.org/
+- https://cran.r-project.org/web/packages/available_packages_by_name.html
+- https://www.rstudio.com/products/rstudio/download/#download
+- https://www.rstudio.com/products/rstudio/download-server/
+- https://rstudio.cloud/projects
+- https://www.linkedin.com/pulse/installing-r-rstudio-windows-edgar-ruiz/
+- https://grunwaldlab.github.io/metacoder_documentation/appendix--00--intro_to_rstudio.html
+
+## Training Environment... RStudio Server
+- https://www.edgarsdatalab.com/2017/11/24/setup-an-rstudio-server-in-ubuntu/
+- https://www.edgarsdatalab.com/2016/08/25/setup-a-shiny-server-in-aws/
+- https://rviews.rstudio.com/2018/08/23/learning-analytic-administration-through-a-sandbox/
+
+## IDE PICK A DATASET
+
+- Built-in datasets
+- data()
+
+## Let's go with ToothGrowth
+- data(ToothGrowth)
+- ?ToothGrowth
+- ToothGrowth
+- View(ToothGrowth)
+- summary(ToothGrowth)
+- plot(ToothGrowth)
+- http://stat.ethz.ch/R-manual/R-devel/library/datasets/html/ToothGrowth.html
+- ToothGrowth %>% View("TG")
+- Any errors?
+
+
+## Why the Error?
+- library(tidyverse)
+- https://www.tidyverse.org/
+- http://r4ds.had.co.nz
+- http://r4ds.had.co.nz/pipes.html
+- https://github.com/rstudio/RStartHere
+
+
+## Managing-libraries
+- https://support.rstudio.com/hc/en-us/articles/215733837-Managing-libraries-for-RStudio-Server
+- https://cran.r-project.org/doc/manuals/r-release/R-admin.html#Managing-libraries
+- In shell, run "tree"
+
+## Packages...
+- getwd()
+- installed.packages()
+- .libPaths()
+- Install a package...how about one from here:
+- https://gallery.shinyapps.io/087-crandash/
+- User library
+- System library
+- https://juliasilge.com/blog/navigating-packages/
+
+
+## Let us explore the data set a bit
+- ToothGrowth%>% write_csv('ToothGrowth.csv')
+- ToothGrowth2 <-read_csv("ToothGrowth.csv")
+- names(ToothGrowth) # names of the variables
+- dim(ToothGrowth) # dimension (number of rows and columns)
+- str(ToothGrowth) # structure of the data set
+- class(ToothGrowth)
+- head(ToothGrowth, n = 5)
+- tail(ToothGrowth, n = 5)
+
+## DATATYPES
+- R has a wide variety of data types…
+- Vectors
+- Lists
+- Matrix
+- Factors
+- Data frame
+- Tibble
+
+## WHAT I LIKE ABOUT TIBBLES..
+
+<div class="columns-2">
+- The pet cat -no
+- Timmy and Tommy Tibble –no, but my kids do…
+- An awesome data set format for R: yes
+- [Tibble info](http://colorado.rstudio.com/rsc/content/678/tidyverse_notebook.nb.html)
+
+ <div class="img-col">
+   ![](tibbles.jpg)
+   
+   <div>CC image courtesy <br /> of <a href="http://pbskids.org/arthur/friends/tibbles/photos.html">pbskids</a> arthur</div>
+ </div>
+</div>
+
+## Tribbles!..
+
+<div class="columns-2">
+- Another way to create a tibble is with tribble(), short for transposed tibble
+- http://r4ds.had.co.nz/tibbles.html
+
+ <div class="img-col">
+   ![](tribbles.jpg)
+   
+   <div>CC image courtesy CBS Home Entertainment<br /> of <a href="http://www.treknews.net/2017/07/31/star-trek-discovery-tribbles-pg13/">The Trouble </a> With Tribbles</div>
+ </div>
+</div>
+
+- Darn quadrotriticale
+
+## Tibble Example
+
+```{r}
+library(tibble)
+#library("tidyverse")
+storms <-tribble(
+~storm, ~wind, ~pressure, ~date,
+"Alberto", 110, 1007, "2000-08-12",
+"Alex", 45, 1009, "1998-07-30",
+"Allison", 65, 1005, "1995-06-04",
+"Ana", 40, 1013, "1997-07-01",
+"Arlene", 50, 1010, "1999-06-13",
+"Arthur", 45, 1010, "1996-06-21"
+)
+
+# filter(storms, wind == 45)
+
+```
+
+## Empowered to Build Powerful Visualizations, Reports & Apps
+- ["R is a fantastic environment for the rapid exploration of in-memory data"](https://peadarcoyle.wordpress.com/2015/08/02/interview-with-a-data-scientist-hadley-wickham/)
+- http://www.acop7.org/previous-acop-meetings-acop7-posters
+
+## Common Reporting Tasks - ggplot2
+
+<div class="columns-2">
+- [Plotting system for R](https://rpubs.com/hadley/ggplot2-toolbox)
+- [Created by Hadley Wickham](http://ggplot2.org/)
+- [Powerful graphics language for creating elegant and complex plots](http://www.cookbook-r.com/Graphs/)
+- [ggplot2 is a graphing library for R. Use ggplot2 with Plotly to create interactive, online ggplot2 charts with D3.js.](https://plot.ly/ggplot2/)
+- [ggvis is a data visualization package for R](http://ggvis.rstudio.com/)
+
+<div class="img-col">
+<a href="https://ramnathv.github.io/pycon2014-r/visualize/ggplot2.html">![ggplot2](ggplot2.png)</a>
+
+
+</div>
+
+## A ggplot2 template - Make any plot by filling in the parameters of this template
+
+```{r}
+#ggplot(data = <DATA>) +
+#<GEOM_FUNCTION>(mapping = aes(<MAPPINGS>))
+```
+
+```{r fig.height = 3, fig.width = 5}
+library(ggplot2)
+ggplot(data = mpg) +
+geom_point(mapping = aes(x = displ, y = hwy))
+```
+
+## Storms example
+```{r}
+library(ggplot2)
+ggplot(data = storms) +
+geom_point(mapping = aes(x = wind, y = pressure))
+
+```
+
+
+
+
+
+## Collecting Information About Your R Session...
+- writeLines(capture.output(sessionInfo()), "sessionInfo.txt")
+- writeLines(capture.output(devtools::session_info()), "devsessionInfo.txt")
+- packageVersion("tidyverse")
+- https://support.rstudio.com/hc/en-us/articles/219949047-Installing-older-versions-of-packages
+- http://manishbarnwal.com/blog/2016/10/05/install_a_package_particular_version_in_R/
+- https://github.com/r-lib/sessioninfo
+- https://support.rstudio.com/hc/en-us/articles/360002242413-Multiple-versions-of-R
+
+
+## Preview - Importing Data
+<div class="columns-2">
+
+- Tabular
+- Hierarchical
+- Relational
+- Distributed
+ 
+  <div class="img-col">
+   ![htmlwidgets1](htmlwidgets1.png)
+   
+ </div>
+</div>
+
+## Tabular
+- 01-tabular-data.R
+
+## Import Dataset Menu
+
+<div class="columns-2">
+- RStudio Connections Pane
+- Easy to use
+- Writes code
+
+<div class="img-col">
+![](import.png)
+   
+ </div>
+</div>
+
+## Hierarchical Data
+- tree-like structure
+- XML, JSON, HTML, etc.
+- 02-hierarchical-data.R
+
+
+
+
+
+
+
+
+## Hopefully Not in this room...
+
+<div class="columns-4">![mouse](mouse.png)</a>
+
+</div>
+
+
+
+
+
+# R Markdown
+
+## Notes on Reproducibility
+
+- https://www.nih.gov/research-training/rigor-reproducibility/principles-guidelines-reporting-preclinical-research
+- http://journals.plos.org/plosbiology/article?id=10.1371%2Fjournal.pbio.1002165
+- https://ropensci.org/blog/2014/06/09/reproducibility/
+- https://www.r-statistics.com/2016/07/the-reproducibility-crisis-in-science-and-prospects-for-r/
+- http://biorxiv.org/content/early/2016/07/29/066803
+- https://github.com/statwonk/openfda-dashboard
+- https://github.com/crtahlin/medplot
+- https://beta.rstudioconnect.com/content/3145/Resources_Links_on_Using_R_in_Regulated_Clinical_Trial_Environments.html
+- https://github.com/ropensci/drake
+
+
+## Development Process
+- ["I created a quick plot, that then turned into a R Notebook, that then turned into an interactive dashboard."](https://www.linkedin.com/pulse/its-nonlinear-world-interactive-dashboard-edgar-ruiz/)
+
+
+## R Markdown - Benefits & Features
+
+<div class="columns-2">
+ - Markdown is a particular type of markup language.
+ - Markup languages are designed produce documents from plain text.
+ - Existing R code can be used within R Markdown & reports can be parameterized
+ - Easy creation of dynamic documents, presentations, and reports
+ - Framework for writing reproducible reports from R
+ 
+<div class="img-col">
+   ![rmarkdown](Rmarkdown1.png)
+ </div>
+</div>
+
+## What can I do with RMD?
+
+- Write a book http://adv-r.had.co.nz/
+- Write a blog https://rviews.rstudio.com
+- Create a website http://rmarkdown.rstudio.com/
+- Add a vignette to a package http://yihui.name/knitr/demo/vignette/
+- Publish research https://github.com/rstudio/rticles
+- Automate reporting https://github.com/philbowsher/Job-Scheduling-R-Markdown-Reports-via-R
+- Make PowerPoints https://github.com/nwstephens/rmd2ppt
+- Preserve your sanity and look back at your workflow
+
+## Using R Markdown - How to Build a Document - Installation & Structure
+
+ - Comes installed with the RStudio IDE
+ - File Template - within RStudio
+ - ["Add R code - Code Chunks"](http://rmarkdown.rstudio.com/authoring_rcodechunks.html) 
+ - 
+ - ["R Markdown Cheat Sheet"](http://shiny.rstudio.com/articles/rm-cheatsheet.html) 
+ - Enhance with Shiny functions and R code
+ - Utilize Chunk Options - echo=FALSE, results="hide", include=FALSE, warning=FALSE & message=FALSE 
+ - Global chunk options
+ 
+## Example R Markdown Doc -- `Example.RMD`
+
+- Create a new R Markdown document in the IDE by going to 'File' and select 'New File' and select 'R Markdown...' and create a new document and leave output as HTML
+<div class="columns-4">![Rmarkdown2](Rmarkdown2.png)</a> </div>
+
+- Then select Knit and save it as Example.RMD </td>
+<td><img src="Rmarkdown3.png" width="200" /></td>
+</tr>
+</table>
+
+## rmarkdown Parameters -- `1_RMD_Stocks`
+
+- Parameters are useful when you want to re-render the same report with distinct values for various key inputs
+- R Markdown documents can include one or more parameters whose values can be set when you render the report
+- https://rmarkdown.rstudio.com/developer_parameterized_reports.html
+- https://rmarkdown.rstudio.com/lesson-6.html
+
+## OpenFDA Analysis - R Markdown Report Demo - pharmarmd.Rmd
+
+<div class="columns-2">
+- [ropenhealth/openfda](https://github.com/rOpenHealth/openfda)
+- [openFDA API endpoint for adverse drug events](https://open.fda.gov/drug/event/)
+- [openfda-dashboard information](https://github.com/statwonk/openfda-dashboard/blob/master/about2.Rmd)
+- [openFDA reference guide](https://open.fda.gov/drug/event/reference/)
+- [Ten things to know about drug adverse events](https://open.fda.gov/update/ten-things-to-know-about-adverse-events/)
+
+<div class="img-col">
+<a href="https://open.fda.gov/update/drilling-into-the-details/">![fda](fda.png)</a>
+
+
+</div>
+
+</div>
+
+
+
+
+# Genius of R Markdown...
+
+## Part 2.0 - R Notebooks
+
+<div class="columns-2">
+- [Notebooks](http://rmarkdown.rstudio.com/r_notebooks.html)
+- [Notebook Background](https://rviews.rstudio.com/2017/03/15/why-i-love-r-notebooks/)
+- Leonardo da Vinci…Page from the Codex Atlanticus shows notes and images about water wheels and Archimedean Screws
+- Combine in a single document: Narrative, Code, Output & then Render to HTML
+
+<div class="img-col">
+<a href="https://blog.rstudio.com/2016/10/05/r-notebooks/">![labnotebook4](labnotebook4.png)</a>
+
+</div>
+
+## Part 2.0 - R Notebooks cont.
+
+<div class="columns-2">
+- Number 3: Notebooks are for doing science
+- Number 2: R Notebooks have great features
+- Number 1: R Notebooks make it easy to create and share reports
+- http://r4ds.had.co.nz/r-markdown-workflow.html
+- 3_RMD_Notebook_Tidyverse
+
+<div class="img-col">
+<a href="http://rmarkdown.rstudio.com/r_notebooks.html#saving_and_sharing">![notebook-demo](notebook-demo.png)</a>
+
+</div>
+
+# The Evolution of R Markdown
+
+## Intro to RMD - flexdashboard - Create Data Visualizations as a Dashboard
+
+<div class="columns-2">
+- [flexdashboard](http://rmarkdown.rstudio.com/flexdashboard/)
+- [Gene Expression Biclustering - Bryan Lewis](https://jjallaire.shinyapps.io/shiny-biclust/)
+- [Iris K-Means Clustering](https://jjallaire.shinyapps.io/shiny-kmeans/)
+
+<div class="img-col">
+<a href="https://jjallaire.shinyapps.io/shiny-biclust/">![rmarkdown3](flex.png)</a>
+
+</div>
+
+## Before Flexdashboard
+
+- R Markdown templates... Typically HTML is modified with an R package
+- Can also be modified directly in the YAML header with your own styles.css file
+- Here is a R package with prebaked CSS... https://github.com/nwstephens/rmdcss
+- https://rmarkdown.rstudio.com/html_document_format.html#custom_css
+- https://raw.githubusercontent.com/rstudio/seamonster/master/rmarkdown/parameterized-stock/parameterized-flexdashboard-stock.Rmd
+- https://rmarkdown.rstudio.com/developer_document_templates.html
+- http://markdowncss.github.io/
+- https://github.com/yixuan/prettydoc/
+
+
+# htmlwidgets
+
+## Live HTML Widgets Examples
+
+<div class="columns-2">
+- [Genomic data for antibiotic resistant strains of mycobacterium tuberculosis by Amanda Winburn & others](https://hmdc.shinyapps.io/genTB/)
+- [Best & Worst California Hospitals for Surgery by Gary Chung
+](https://gchung.shinyapps.io/CAhospitals/)
+- [canvasXpress - developed as the core visualization component for bioinformatics and systems biology analysis at Bristol-Myers Squibb by Isaac Neuhaus
+](http://canvasxpress.org/)
+- [Visualizing U.S. Clinical Trials
+](https://gchung.shinyapps.io/CTgov/)
+
+<div class="img-col">![rmarkdown](htmlwidgets4.png)
+ </div>
+
+</div>
+
+## HTML Widgets R Bindings to JavaScript Libraries
+
+<div class="columns-2">
+
+- Used at the R console for data analysis just like conventional R plots (via RStudio Viewer).
+- Seamlessly embedded within R Markdown documents and Shiny web applications.
+- Saved as standalone web pages for ad-hoc sharing via email, Dropbox, etc.
+
+<div class="img-col"><a href="http://www.htmlwidgets.org/showcase_leaflet.html">![htmlwidgets1](htmlwidgets1.png)</a>
+ </div>
+ 
+</div>
+
+## HTML Widgets &mdash; Leaflet Example -- `1_htmlwidgets_Leaflet_Starbucks`
+
+<div class="columns-2">
+<a href="http://www.htmlwidgets.org/showcase_leaflet.html">![htmlwidgets2](htmlwidgets2.png)</a>
+
+- [Leaflet Example ](http://rstudio.github.io/leaflet/)
+- [Viewing Starbucks Locations Near us](https://opendata.socrata.com/Business/All-Starbucks-Locations-in-the-US-Map/ddym-zvjk)
+- [Loads a Data Set](https://opendata.socrata.com/) 
+
+</div>
+
+ 
+## Come see us at the RStudio Conference...
+
+- [Austin January 15th through the 18th 2019](https://www.rstudio.com/conference/)
+- https://github.com/rstudio/rstudio-conf/tree/master/2018
+
+<div class="columns-4">![jerry](jerry.png)</a>
+
+</div>
